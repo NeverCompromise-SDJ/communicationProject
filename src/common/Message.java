@@ -11,7 +11,7 @@ public class Message implements Serializable {
     String getter;//接收者
     String content;//内容
     String sendTime;//发送时间
-    String msgType;//消息类型
+    String msgType;//消息类型(在接口定义消息类型)
 
     public static Long getSerialVersionUID() {
         return serialVersionUID;
