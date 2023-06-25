@@ -19,6 +19,7 @@ public class ClientView {
                     String userId = scanner.next();
                     System.out.print("请输入密码：");
                     String password = scanner.next();
+                    //进入二级菜单
                     if (true) {
                         while (loop) {
                             System.out.println("========网络通信系统二级菜单(用户xxx)========");
