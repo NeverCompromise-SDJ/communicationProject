@@ -5,5 +5,5 @@ package common;
  */
 public interface MessageType {
     String MESSAGE_LOGIN_SUCCEED = "1";//表示登录成功
-    String MESSAGE_LOGIN_FAILED = "1";//表示登录失败
+    String MESSAGE_LOGIN_FAILED = "2";//表示登录失败
 }
