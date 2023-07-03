@@ -17,6 +17,7 @@ public class UserClientService {
 
     //发送userId和pwd到服务器验证该用户是否合法
     public boolean checkUser(String userId, String pwd) {
+        boolean isLoginSuccess = false;
         user.setUserId(userId);
         user.setPasswd(pwd);
         Socket socket = null;//服务器端口号为9999
@@ -28,16 +29,25 @@ public class UserClientService {
             //接受服务端的返回信息（Message对象）
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             Message msg = (Message) ois.readObject();
-            //
+            //登录成功和失败的操作
             if (msg.getMsgType().equals(MessageType.MESSAGE_LOGIN_SUCCEED)) {//登陆成功
                 //创建一个与服务器端保持通信的线程（ClientConnectServerThread）
-
+                ClientConnectServerThread ccst = new ClientConnectServerThread(socket);
+                ccst.start();
+                //为了后面客户端的扩展，我们将线程放入到集合管理
+                ManageClientConnectServerThread.addClientConnectServerThread(userId, ccst);
+                //将登录状态置为成功
+                isLoginSuccess = true;
             } else {//登录失败
-
+                //登录失败则关闭socket相关资源，不启动与服务器通信的线程
+                oos.close();
+                ois.close();
+                socket.close();
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        return isLoginSuccess;
     }
 
 }
