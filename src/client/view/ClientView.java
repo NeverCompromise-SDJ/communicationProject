@@ -1,9 +1,13 @@
 package client.view;
 
+import client.service.UserClientService;
+
 import java.util.Scanner;
 
 public class ClientView {
     private boolean loop = true;//决定界面的循环展示
+    //用于登录服务器、注册用户
+    private UserClientService ucs = new UserClientService();
 
     private ClientView() {
         Scanner scanner = new Scanner(System.in);
@@ -13,6 +17,7 @@ public class ClientView {
             System.out.println("\t\t\t9 退出系统");
             System.out.print("请输入您的选择：");
             String chooseOfFirstMenu = scanner.next();//记录一级菜单的选择
+            //一级菜单
             switch (chooseOfFirstMenu) {
                 case "1":
                     System.out.print("请输入用户名：");
@@ -20,7 +25,7 @@ public class ClientView {
                     System.out.print("请输入密码：");
                     String password = scanner.next();
                     //进入二级菜单
-                    if (true) {
+                    if (ucs.checkUser(userId, password)) {
                         while (loop) {
                             System.out.println("========网络通信系统二级菜单(用户xxx)========");
                             System.out.println("\t\t\t1 显示在线用户列表");

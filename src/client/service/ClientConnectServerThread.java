@@ -30,6 +30,7 @@ public class ClientConnectServerThread extends Thread {
             try {
                 System.out.println("客户端信息，等待从服务端发送的消息");
                 ObjectInputStream ois = new ObjectInputStream(new ObjectInputStream(socket.getInputStream()));
+                //注意如果服务器没有发生Message对象，则线程会阻塞在这里
                 Message msg = (Message) ois.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

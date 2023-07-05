@@ -6,6 +6,7 @@ import java.util.HashMap;
  * 该类管理客户端连接到服务器端的线程的类
  */
 public class ManageClientConnectServerThread {
+    //用于存放客户端与服务端之间链接的线程，
     private static HashMap<String, ClientConnectServerThread> hm = new HashMap<>();
 
     /**
