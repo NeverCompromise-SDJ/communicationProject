@@ -5,7 +5,7 @@ import client.service.UserClientService;
 import java.util.Scanner;
 
 /**
- * 客户端
+ * 客户端界面
  */
 
 public class ClientView {

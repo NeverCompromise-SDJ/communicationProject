@@ -3,7 +3,7 @@ package common;
 import java.io.Serializable;
 
 /**
- * 表示一个用户信息
+ * 该类的一个对象，表示一个用户的信息
  */
 public class User implements Serializable {
     private static final Long serialVersionUID = 1L;//序列化ID
