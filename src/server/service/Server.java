@@ -9,12 +9,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 服务器监听9999端口，等待客户端的链接，并保持通信
+ * 服务器，监听9999端口，等待客户端的链接，并保持通信
  */
 public class Server {
     private ServerSocket ss = null;
+    //用于存放多个已注册用户的信息，模拟数据库
+    private static ConcurrentHashMap<String, String> vaildUsers = new ConcurrentHashMap<>();
+
+    //初始化已注册的用户信息
+    static {
+        vaildUsers.put("100", "123");
+        vaildUsers.put("sdj1", "1234");
+        vaildUsers.put("肖华", "xiaohua");
+    }
 
     public Server() {
         //端口可以写在配置文件中
@@ -31,8 +41,8 @@ public class Server {
                 User user = (User) ois.readObject();
                 //创建一个Message对象，准备回复客户端
                 Message msg = new Message();
-                //假设用户名或id=100，且密码为123就能成功登录
-                if (user.getUserId().equals("100") && user.getPasswd().equals("123")) {
+                //进行用户合法性的校验
+                if (checkUser(user.getUserId(), user.getPasswd())) {
                     //给客户端发送登录成功的信息
                     msg.setMsgType(MessageType.MESSAGE_LOGIN_SUCCEED);
                     oos.writeObject(msg);
@@ -45,6 +55,7 @@ public class Server {
                     //给客户端发送登录失败的信息
                     msg.setMsgType(MessageType.MESSAGE_LOGIN_FAILED);
                     oos.writeObject(msg);
+                    System.out.println("服务端的校验-该用户不正确或不存在");
                     //释放相关资源
                     ois.close();
                     oos.close();
@@ -61,5 +72,25 @@ public class Server {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * 检查客户端传入的用户是否存在且正确
+     *
+     * @param userId 用户名
+     * @param pwd    密码
+     * @return 用户合法返回true，否则返回false
+     */
+    private boolean checkUser(String userId, String pwd) {
+        //如果用户名不存在
+        if (vaildUsers.get(userId) == null) {
+            return false;
+        }
+        //如果用户名存在但密码错误
+        if (!pwd.equals(vaildUsers.get(userId))) {
+            return false;
+        }
+        //如果用户名存在切密码正确
+        return true;
     }
 }

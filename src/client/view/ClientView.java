@@ -4,6 +4,10 @@ import client.service.UserClientService;
 
 import java.util.Scanner;
 
+/**
+ * 客户端
+ */
+
 public class ClientView {
     private boolean loop = true;//决定界面的循环展示
     //用于登录服务器、注册用户
