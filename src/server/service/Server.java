@@ -1,4 +1,4 @@
-package service;
+package server.service;
 
 import common.Message;
 import common.MessageType;

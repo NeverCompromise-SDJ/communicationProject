@@ -1,4 +1,4 @@
-package service;
+package server.service;
 
 import common.Message;
 
@@ -23,7 +23,7 @@ public class ServerConnectClientThread extends Thread {
         while (true) {
             ObjectInputStream ois = null;
             try {
-                System.out.println("服务端和客户端保持通信，读取数据。。。");
+                System.out.println("服务端和客户端" + userId + "保持通信，读取数据。。。");
                 ois = new ObjectInputStream(socket.getInputStream());
                 Message msg = (Message) ois.readObject();
             } catch (IOException | ClassNotFoundException e) {

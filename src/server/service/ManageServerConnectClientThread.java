@@ -1,6 +1,4 @@
-package service;
-
-import client.service.ClientConnectServerThread;
+package server.service;
 
 import java.util.HashMap;
 

@@ -24,10 +24,10 @@ public class ClientView {
                     String userId = scanner.next();
                     System.out.print("请输入密码：");
                     String password = scanner.next();
-                    //进入二级菜单
+                    //进行用户校验，校验通过则展示二级菜单
                     if (ucs.checkUser(userId, password)) {
                         while (loop) {
-                            System.out.println("========网络通信系统二级菜单(用户xxx)========");
+                            System.out.println("========网络通信系统二级菜单(用户" + userId + ")========");
                             System.out.println("\t\t\t1 显示在线用户列表");
                             System.out.println("\t\t\t2 群发消息");
                             System.out.println("\t\t\t3 私聊消息");
