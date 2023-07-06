@@ -1,6 +1,5 @@
 package service;
 
-import client.service.ManageClientConnectServerThread;
 import common.Message;
 import common.MessageType;
 import common.User;
