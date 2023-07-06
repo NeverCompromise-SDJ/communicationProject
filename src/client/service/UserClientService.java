@@ -9,7 +9,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 /**
- * 该类完成用户登录注册等功能
+ * 该类为客户端的服务，与服务端交互，完成用户登录注册等功能
  */
 public class UserClientService {
     //我们可能在其他地方使用User对象，因此将User对象做为成员属性
@@ -31,10 +31,10 @@ public class UserClientService {
             Message msg = (Message) ois.readObject();
             //登录成功和失败的操作
             if (msg.getMsgType().equals(MessageType.MESSAGE_LOGIN_SUCCEED)) {//登陆成功
-                //创建一个与服务器端保持通信的线程（ClientConnectServerThread）
+                //启动一个含有客户端socket的线程，用于与服务器socket进行通信
                 ClientConnectServerThread ccst = new ClientConnectServerThread(socket);
                 ccst.start();
-                //为了后面客户端的扩展，我们将线程放入到集合管理
+                //为了实现多客户端与服务器进行通信，我们将含有客户端socket的线程放入到集合管理
                 ManageClientConnectServerThread.addClientConnectServerThread(userId, ccst);
                 //将登录状态置为成功
                 isLoginSuccess = true;

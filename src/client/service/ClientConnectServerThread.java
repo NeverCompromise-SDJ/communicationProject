@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 
 /**
- * 与服务器保持链接的线程
+ *  该类的一个对象，是与服务器保持链接的线程
  */
 public class ClientConnectServerThread extends Thread {
     //该线程需要持有socket与服务器保持连接

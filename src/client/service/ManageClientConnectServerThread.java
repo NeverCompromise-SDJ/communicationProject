@@ -3,7 +3,7 @@ package client.service;
 import java.util.HashMap;
 
 /**
- * 该类管理客户端连接到服务器端的线程的类
+ * 该类管理客户端连接到服务器的线程
  */
 public class ManageClientConnectServerThread {
     //用于存放客户端与服务端之间链接的线程，
@@ -24,7 +24,7 @@ public class ManageClientConnectServerThread {
      *
      * @param userId 用户id
      */
-    public static void getClientConnectServerThread(String userId) {
-        hm.get(userId);
+    public static ClientConnectServerThread getClientConnectServerThread(String userId) {
+        return hm.get(userId);
     }
 }
