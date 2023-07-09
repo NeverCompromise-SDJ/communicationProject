@@ -41,7 +41,7 @@ public class ClientView {
                             String chooseOfSecondMenu = scanner.next();//记录二级菜单的选择
                             switch (chooseOfSecondMenu) {
                                 case "1":
-                                    System.out.println("显示在线用户列表");
+                                    ucs.getOnlineUserList();
                                     break;
                                 case "2":
                                     System.out.println("群发消息");

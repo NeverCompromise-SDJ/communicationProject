@@ -1,6 +1,7 @@
 package client.service;
 
 import common.Message;
+import common.MessageType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -29,9 +30,21 @@ public class ClientConnectServerThread extends Thread {
         while (true) {
             try {
                 System.out.println("客户端信息，等待从服务端发送的消息");
-                ObjectInputStream ois = new ObjectInputStream(new ObjectInputStream(socket.getInputStream()));
+                ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 //注意如果服务器没有发生Message对象，则线程会阻塞在这里
                 Message msg = (Message) ois.readObject();
+                //如果服务器返回的是在线用户的列表，则输出其内容
+                if (msg.getMsgType().equals(MessageType.MESSAGE_RETURN_ONLINE_LIST)) {
+                    //我们规定在线列表信息，每个用户之间以空格分开，因此取每一个用户的信息时以空格为分隔符
+                    String[] onlineUserList = msg.getContent().split(" ");
+                    System.out.println("\n===========在线用户列表==========");
+                    for (String username : onlineUserList) {
+                        System.out.println("用户：" + username);
+                    }
+
+                } else {
+                    System.out.println("客户端-其他消息暂未处理");
+                }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

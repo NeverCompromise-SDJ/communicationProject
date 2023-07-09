@@ -15,7 +15,13 @@ public class UserClientService {
     //我们可能在其他地方使用User对象，因此将User对象做为成员属性
     private User user = new User();
 
-    //发送userId和pwd到服务器验证该用户是否合法
+    /**
+     * 发送userId和pwd到服务器验证该用户是否合法
+     *
+     * @param userId 用户id
+     * @param pwd    用户密码
+     * @return 用户是否合法
+     */
     public boolean checkUser(String userId, String pwd) {
         boolean isLoginSuccess = false;
         user.setUserId(userId);
@@ -48,6 +54,24 @@ public class UserClientService {
             e.printStackTrace();
         }
         return isLoginSuccess;
+    }
+
+    /**
+     * 向服务端请求在线用户信息
+     */
+    public void getOnlineUserList() {
+        //向服务端发送请求在线用户信息的消息
+        Message msg = new Message();
+        msg.setMsgType(MessageType.MESSAGE_GET_ONLINE_LIST);
+        msg.setSender(user.getUserId());
+        try {
+            //通过用户ID，得到相应的线程，然后得到线程持有的socket，再得到socket对应的输出流，将该流包装成对象流
+            ObjectOutputStream oos = new ObjectOutputStream(ManageClientConnectServerThread.getClientConnectServerThread
+                    (user.getUserId()).getSocket().getOutputStream());
+            oos.writeObject(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
