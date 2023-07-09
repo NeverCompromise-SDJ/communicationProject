@@ -21,6 +21,16 @@ public class ManageServerConnectClientThread {
     }
 
     /**
+     * 删除集合中的某个线程
+     *
+     * @param userId 用户id
+     */
+    public static void removeServerConnectClientThread(String userId) {
+        connectList.remove(userId);
+    }
+
+
+    /**
      * 通过用户id得到对应线程
      *
      * @param userId 用户id

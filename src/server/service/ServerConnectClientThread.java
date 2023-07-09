@@ -1,6 +1,5 @@
 package server.service;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import common.Message;
 import common.MessageType;
 
@@ -41,8 +40,17 @@ public class ServerConnectClientThread extends Thread {
                     onlineUserListMsg.setContent(ManageServerConnectClientThread.getOnlineUserList());
                     ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
                     oos.writeObject(onlineUserListMsg);
-                }else {
-                    System.out.println("服务端-其他消息暂未处理");
+                } else if (msg.getMsgType().equals(MessageType.MESSAGE_CLIENT_EXIT)) {
+                    //如果收到了来自客户端的退出请求
+                    System.out.println(msg.getSender() + "退出");
+                    //则从管理服务端和客户端的集合中删除该服务端线程
+                    ManageServerConnectClientThread.removeServerConnectClientThread(msg.getSender());
+                    //关闭该服务端线程对应的socket
+                    socket.close();
+                    //关闭该服务端线程
+                    break;
+                } else {
+
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

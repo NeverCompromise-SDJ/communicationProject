@@ -53,7 +53,7 @@ public class ClientView {
                                     System.out.println("发送文件");
                                     break;
                                 case "9":
-                                    System.out.println("您已成功退出系统");
+                                    ucs.clientExit();
                                     loop = false;
                                     break;
                                 default:

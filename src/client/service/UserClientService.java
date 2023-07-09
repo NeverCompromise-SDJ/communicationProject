@@ -66,9 +66,29 @@ public class UserClientService {
         msg.setSender(user.getUserId());
         try {
             //通过用户ID，得到相应的线程，然后得到线程持有的socket，再得到socket对应的输出流，将该流包装成对象流
-            ObjectOutputStream oos = new ObjectOutputStream(ManageClientConnectServerThread.getClientConnectServerThread
-                    (user.getUserId()).getSocket().getOutputStream());
+            ObjectOutputStream oos = new ObjectOutputStream(ManageClientConnectServerThread.getClientConnectServerThread(
+                    user.getUserId()).getSocket().getOutputStream());
             oos.writeObject(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 客户端向服务端发送客户端退出信息
+     */
+    public void clientExit() {
+        Message msg = new Message();
+        msg.setSender(user.getUserId());
+        msg.setMsgType(MessageType.MESSAGE_CLIENT_EXIT);
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(ManageClientConnectServerThread.getClientConnectServerThread(
+                    user.getUserId()).getSocket().getOutputStream());
+            oos.writeObject(msg);
+            System.out.println(user.getUserId() + "退出系统");
+            /*退出客户端进程（不是退出线程）,这里可以直接用因为是客户端层面的退出，而不是客户端线程层面的退出。
+            如果是客户端线程层面的退出，就不能用这个，需要在ClientConnectServerThread上根据服务端发送的退出消息，执行退出操作*/
+            System.exit(0);
         } catch (IOException e) {
             e.printStackTrace();
         }
