@@ -47,7 +47,11 @@ public class ClientView {
                                     System.out.println("群发消息");
                                     break;
                                 case "3":
-                                    System.out.println("私聊消息");
+                                    System.out.print("请输入消息接收方：");
+                                    String getUser = scanner.next();
+                                    System.out.println("请输入发送内容：");
+                                    String content = scanner.next();
+                                    ucs.sendMessage(getUser, content);
                                     break;
                                 case "4":
                                     System.out.println("发送文件");

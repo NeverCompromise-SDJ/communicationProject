@@ -7,6 +7,8 @@ import common.User;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.util.Scanner;
 
 /**
  * 该类为客户端的服务，与服务端交互，完成用户登录注册等功能
@@ -92,6 +94,23 @@ public class UserClientService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendMessage(String getUser, String content) {
+        Message msg = new Message();
+        msg.setSender(user.getUserId());
+        msg.setGetter(getUser);
+        msg.setMsgType(MessageType.MESSAGE_COMMON);
+        LocalDateTime sendTime = LocalDateTime.now();
+        String sendTimeOfYear = String.valueOf(sendTime.getYear());
+        String sendTimeOfMonth = String.valueOf(sendTime.getMonth());
+        String sendTimeOfDay = String.valueOf(sendTime.getDayOfMonth());
+        String sendTimeOfHour = String.valueOf(sendTime.getHour());
+        String sendTimeOfMinute = String.valueOf(sendTime.getMinute());
+        String sendTimeOfSecond = String.valueOf(sendTime.getSecond());
+        msg.setSendTime(sendTimeOfYear + "-" + sendTimeOfMonth + "-" + sendTimeOfDay + "\t" + sendTimeOfHour + ":" +
+                sendTimeOfMinute + ":" + sendTimeOfSecond);
+        msg.setContent(content);
     }
 
 }
