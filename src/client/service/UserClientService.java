@@ -96,21 +96,4 @@ public class UserClientService {
         }
     }
 
-    public void sendMessage(String getUser, String content) {
-        Message msg = new Message();
-        msg.setSender(user.getUserId());
-        msg.setGetter(getUser);
-        msg.setMsgType(MessageType.MESSAGE_COMMON);
-        LocalDateTime sendTime = LocalDateTime.now();
-        String sendTimeOfYear = String.valueOf(sendTime.getYear());
-        String sendTimeOfMonth = String.valueOf(sendTime.getMonth());
-        String sendTimeOfDay = String.valueOf(sendTime.getDayOfMonth());
-        String sendTimeOfHour = String.valueOf(sendTime.getHour());
-        String sendTimeOfMinute = String.valueOf(sendTime.getMinute());
-        String sendTimeOfSecond = String.valueOf(sendTime.getSecond());
-        msg.setSendTime(sendTimeOfYear + "-" + sendTimeOfMonth + "-" + sendTimeOfDay + "\t" + sendTimeOfHour + ":" +
-                sendTimeOfMinute + ":" + sendTimeOfSecond);
-        msg.setContent(content);
-    }
-
 }

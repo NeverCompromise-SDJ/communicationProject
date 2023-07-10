@@ -1,5 +1,6 @@
 package client.view;
 
+import client.service.MessageClientService;
 import client.service.UserClientService;
 
 import java.util.Scanner;
@@ -12,6 +13,8 @@ public class ClientView {
     private boolean loop = true;//决定界面的循环展示
     //用于登录服务器、注册用户
     private UserClientService ucs = new UserClientService();
+    //用于私聊、群聊
+    private MessageClientService mcs = new MessageClientService();
 
     private ClientView() {
         Scanner scanner = new Scanner(System.in);
@@ -47,11 +50,11 @@ public class ClientView {
                                     System.out.println("群发消息");
                                     break;
                                 case "3":
-                                    System.out.print("请输入消息接收方：");
-                                    String getUser = scanner.next();
+                                    System.out.print("请输入消息接收方(在线)：");
+                                    String getter = scanner.next();
                                     System.out.println("请输入发送内容：");
                                     String content = scanner.next();
-                                    ucs.sendMessage(getUser, content);
+                                    mcs.sendMessageToOneUser(userId, getter, content);
                                     break;
                                 case "4":
                                     System.out.println("发送文件");

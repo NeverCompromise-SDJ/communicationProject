@@ -15,6 +15,11 @@ public class ServerConnectClientThread extends Thread {
     private Socket socket;
     private String userId;//客户端连接到服务器的用户id,，用于区分与哪个客户端保持通信
 
+    //更方便得到socket
+    public Socket getSocket() {
+        return socket;
+    }
+
     public ServerConnectClientThread(Socket socket, String userId) {
         this.socket = socket;
         this.userId = userId;
@@ -49,6 +54,12 @@ public class ServerConnectClientThread extends Thread {
                     socket.close();
                     //关闭该服务端线程
                     break;
+                } else if (msg.getMsgType().equals(MessageType.MESSAGE_COMMON)) {
+                    //如果收到了来自客户端的私聊信息（在线），那么就转发给接收方的客户端
+                    //通过接收方的userId，拿到接收方服务端的socket即可，然后使用该socket向接收方的客户端发送消息
+                    ObjectOutputStream oos = new ObjectOutputStream(ManageServerConnectClientThread.getServerConnectClientThread(
+                            msg.getGetter()).getSocket().getOutputStream());
+                    oos.writeObject(msg);//如果客户不在线，则可以保存到数据库，这样就可以实现离线留言
                 } else {
 
                 }

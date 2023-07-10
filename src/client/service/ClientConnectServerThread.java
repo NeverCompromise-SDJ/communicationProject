@@ -42,8 +42,12 @@ public class ClientConnectServerThread extends Thread {
                         System.out.println("用户：" + username);
                     }
 
+                } else if (msg.getMsgType().equals(MessageType.MESSAGE_COMMON)) {
+                    //如果接收到的是其他用户的私聊消息
+                    //把服务器转发的消息展示到界面上
+                    System.out.println("\n" + msg.getSendTime() + "  " + msg.getSender() + "对你说：" + msg.getContent());
                 } else {
-                    System.out.println("客户端-其他消息暂未处理");
+
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
