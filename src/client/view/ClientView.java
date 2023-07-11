@@ -47,14 +47,16 @@ public class ClientView {
                                     ucs.getOnlineUserList();
                                     break;
                                 case "2":
-                                    System.out.println("群发消息");
+                                    System.out.print("请输入需要群发的消息：");
+                                    String contentToAll = scanner.next();
+                                    mcs.sendMessageToAllUser(userId, contentToAll);
                                     break;
                                 case "3":
                                     System.out.print("请输入消息接收方(在线)：");
                                     String getter = scanner.next();
                                     System.out.println("请输入发送内容：");
-                                    String content = scanner.next();
-                                    mcs.sendMessageToOneUser(userId, getter, content);
+                                    String contentToOne = scanner.next();
+                                    mcs.sendMessageToOneUser(userId, getter, contentToOne);
                                     break;
                                 case "4":
                                     System.out.println("发送文件");

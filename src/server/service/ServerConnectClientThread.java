@@ -66,6 +66,7 @@ public class ServerConnectClientThread extends Thread {
                     //如果收到了来自客户端的群聊信息（在线），那么就转发给出发送方以外的所有在线客户端
                     String[] onlineList = ManageServerConnectClientThread.getOnlineUserList().split(" ");
                     for (String onlineUser : onlineList) {
+                        //排除自己，给其他在线的用户发消息
                         if (msg.getSender().equals(onlineUser)) {
                             continue;
                         }

@@ -46,6 +46,9 @@ public class ClientConnectServerThread extends Thread {
                     //如果接收到的是其他用户的私聊消息
                     //把服务器转发的消息展示到界面上
                     System.out.println("\n" + msg.getSendTime() + "  " + msg.getSender() + "对你说：" + msg.getContent());
+                } else if (msg.getMsgType().equals(MessageType.MESSAGE_TO_ALL)) {
+                    //如果接收到的是群发消息，则展示到界面上
+                    System.out.println("\n" + msg.getSendTime() + "  " + msg.getSender() + "对大家说：" + msg.getContent());
                 } else {
 
                 }
