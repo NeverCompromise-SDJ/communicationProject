@@ -1,5 +1,6 @@
 package client.service;
 
+import UtilityTool.UtilityTool;
 import common.Message;
 import common.MessageType;
 
@@ -25,17 +26,33 @@ public class MessageClientService {
         msg.setSender(senderId);
         msg.setGetter(getterId);
         msg.setMsgType(MessageType.MESSAGE_COMMON);
-        LocalDateTime sendTime = LocalDateTime.now();
-        String sendTimeOfYear = String.valueOf(sendTime.getYear());
-        String sendTimeOfMonth = String.valueOf(sendTime.getMonthValue());
-        String sendTimeOfDay = String.valueOf(sendTime.getDayOfMonth());
-        String sendTimeOfHour = String.valueOf(sendTime.getHour());
-        String sendTimeOfMinute = String.valueOf(sendTime.getMinute());
-        String sendTimeOfSecond = String.valueOf(sendTime.getSecond());
-        msg.setSendTime(sendTimeOfYear + "-" + sendTimeOfMonth + "-" + sendTimeOfDay + " " + sendTimeOfHour + ":" +
-                sendTimeOfMinute + ":" + sendTimeOfSecond);
+        msg.setSendTime(UtilityTool.getLocalTime());
         msg.setContent(content);
         System.out.println(msg.getSendTime() + "  " + senderId + "对" + getterId + "说：" + content);
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(ManageClientConnectServerThread.getClientConnectServerThread(
+                    senderId).getSocket().getOutputStream());
+            oos.writeObject(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * 用户间的群聊（在线）
+     *
+     * @param senderId 发送消息的用户ID
+     * @param content  消息内容
+     */
+    public void sendMessageToAllUser(String senderId, String content) {
+        //先发送消息给服务端，由服务端转发给除自己外的所有在线用户
+        Message msg = new Message();
+        msg.setSender(senderId);
+        msg.setMsgType(MessageType.MESSAGE_TO_ALL);
+        msg.setSendTime(UtilityTool.getLocalTime());
+        msg.setContent(content);
+        System.out.println(msg.getSendTime() + "  " + senderId + "对大家说：" + content);
         try {
             ObjectOutputStream oos = new ObjectOutputStream(ManageClientConnectServerThread.getClientConnectServerThread(
                     senderId).getSocket().getOutputStream());

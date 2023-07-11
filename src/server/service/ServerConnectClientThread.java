@@ -3,10 +3,12 @@ package server.service;
 import common.Message;
 import common.MessageType;
 
+import javax.management.ObjectName;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Iterator;
 
 /**
  * 该类的对象持有一个服务器socket，是与客户端保持通信的线程
@@ -60,6 +62,18 @@ public class ServerConnectClientThread extends Thread {
                     ObjectOutputStream oos = new ObjectOutputStream(ManageServerConnectClientThread.getServerConnectClientThread(
                             msg.getGetter()).getSocket().getOutputStream());
                     oos.writeObject(msg);//如果客户不在线，则可以保存到数据库，这样就可以实现离线留言
+                } else if (msg.getMsgType().equals(MessageType.MESSAGE_TO_ALL)) {
+                    //如果收到了来自客户端的群聊信息（在线），那么就转发给出发送方以外的所有在线客户端
+                    String[] onlineList = ManageServerConnectClientThread.getOnlineUserList().split(" ");
+                    for (String onlineUser : onlineList) {
+                        if (msg.getSender().equals(onlineUser)) {
+                            continue;
+                        }
+                        ObjectOutputStream oos = new ObjectOutputStream(ManageServerConnectClientThread.getServerConnectClientThread(
+                                onlineUser).getSocket().getOutputStream());
+                        oos.writeObject(msg);
+                    }
+
                 } else {
 
                 }

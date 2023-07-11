@@ -7,8 +7,17 @@ import java.util.Iterator;
  * 该类管理服务器连接到客户端的线程
  */
 public class ManageServerConnectClientThread {
-    //用于存放服务器连接到客户端的线程，
+    //用于存放服务器连接到客户端的线程
     private static HashMap<String, ServerConnectClientThread> connectList = new HashMap<>();
+
+    /**
+     * 返回在线的用户线程集合
+     *
+     * @return 服务端在线用户线程的集合
+     */
+    public static HashMap<String, ServerConnectClientThread> getConnectList() {
+        return connectList;
+    }
 
     /**
      * 添加某个线程到集合中
