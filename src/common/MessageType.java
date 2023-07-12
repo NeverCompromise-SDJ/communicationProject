@@ -11,4 +11,5 @@ public interface MessageType {
     String MESSAGE_GET_ONLINE_LIST = "5";//要求返回在线用户列表
     String MESSAGE_RETURN_ONLINE_LIST = "6";//返回在线用户列表
     String MESSAGE_CLIENT_EXIT = "7";//客户端请求退出
+    String MESSAGE_FILE = "8";//文件消息
 }

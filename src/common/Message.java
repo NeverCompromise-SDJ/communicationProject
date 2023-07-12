@@ -7,11 +7,14 @@ import java.io.Serializable;
  */
 public class Message implements Serializable {
     private static final Long serialVersionUID = 1L;//序列化ID
-    String sender;//发送者
-    String getter;//接收者
-    String content;//内容
-    String sendTime;//发送时间
-    String msgType;//消息类型(在接口定义消息类型)
+    private String sender;//发送者
+    private String getter;//接收者
+    private String content;//内容
+    private String sendTime;//发送时间
+    private String msgType;//消息类型(在接口定义消息类型)
+    //文件相关的成员
+    private byte[] fileBytes;//文件的字节数组
+    private int
 
     public static Long getSerialVersionUID() {
         return serialVersionUID;
