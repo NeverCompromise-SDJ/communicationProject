@@ -3,6 +3,7 @@ package client.service;
 import common.Message;
 import common.MessageType;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -49,6 +50,14 @@ public class ClientConnectServerThread extends Thread {
                 } else if (msg.getMsgType().equals(MessageType.MESSAGE_TO_ALL)) {
                     //如果接收到的是群发消息，则展示到界面上
                     System.out.println("\n" + msg.getSendTime() + "  " + msg.getSender() + "对大家说：" + msg.getContent());
+                } else if (msg.getMsgType().equals(MessageType.MESSAGE_FILE)) {
+                    //如果接受到的是文件信息，则把文件保存到指定路径下
+                    FileOutputStream fos = new FileOutputStream(msg.getFileDestPath());
+                    fos.write(msg.getFileBytes());
+                    fos.close();
+                    //接收方客户端提示
+                    System.out.println("\n" + msg.getSendTime() + "  " + msg.getSender() + "对你发送了文件:" +
+                            msg.getFileSourcePath() + "到你的" + msg.getFileDestPath() + "处");
                 } else {
 
                 }

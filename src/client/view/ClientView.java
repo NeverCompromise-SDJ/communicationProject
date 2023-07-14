@@ -1,5 +1,6 @@
 package client.view;
 
+import client.service.FileClientService;
 import client.service.MessageClientService;
 import client.service.UserClientService;
 
@@ -15,6 +16,8 @@ public class ClientView {
     private UserClientService ucs = new UserClientService();
     //用于私聊、群聊
     private MessageClientService mcs = new MessageClientService();
+    //用于发送文件
+    private FileClientService fcs = new FileClientService();
 
     private ClientView() {
         Scanner scanner = new Scanner(System.in);
@@ -53,13 +56,19 @@ public class ClientView {
                                     break;
                                 case "3":
                                     System.out.print("请输入消息接收方(在线)：");
-                                    String getter = scanner.next();
+                                    String msgGetter = scanner.next();
                                     System.out.println("请输入发送内容：");
                                     String contentToOne = scanner.next();
-                                    mcs.sendMessageToOneUser(userId, getter, contentToOne);
+                                    mcs.sendMessageToOneUser(userId, msgGetter, contentToOne);
                                     break;
                                 case "4":
-                                    System.out.println("发送文件");
+                                    System.out.print("请输入消息接收方(在线)：");
+                                    String fileGetter = scanner.next();
+                                    System.out.print("请输入源文件所在路径：");
+                                    String fileSourcePath = scanner.next();
+                                    System.out.print("请输入需要将文件保存到接收方的哪个路径下：");
+                                    String fileDestPath = scanner.next();
+                                    fcs.sendFileToOne(userId, fileGetter, fileSourcePath, fileDestPath);
                                     break;
                                 case "9":
                                     ucs.clientExit();

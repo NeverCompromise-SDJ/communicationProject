@@ -75,6 +75,14 @@ public class ServerConnectClientThread extends Thread {
                         oos.writeObject(msg);
                     }
 
+                } else if (msg.getMsgType().equals(MessageType.MESSAGE_FILE)) {
+                    //如果收到了来自客户端的文件信息，则转发给接收方的客户端
+                    ObjectOutputStream oos = new ObjectOutputStream(ManageServerConnectClientThread.getServerConnectClientThread(
+                            msg.getGetter()).getSocket().getOutputStream());
+                    oos.writeObject(msg);
+                    //服务端日志
+                    System.out.println(msg.getSendTime() + "  " + msg.getSender() + "对" + msg.getGetter()
+                            + "发送了文件");
                 } else {
 
                 }

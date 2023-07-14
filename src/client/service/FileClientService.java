@@ -4,10 +4,7 @@ import common.MessageType;
 import utilityTool.UtilityTool;
 import common.Message;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 /**
  * 该类提供文件传输的服务
@@ -28,7 +25,7 @@ public class FileClientService {
         msg.setGetter(getterId);
         msg.setFileSourcePath(fileSourcePath);
         msg.setFileDestPath(fileDestPath);
-        msg.setMsgType(UtilityTool.getLocalTime());
+        msg.setSendTime(UtilityTool.getLocalTime());
         //将本地文件写入到内存中，并作为msg对象的属性
         FileInputStream fis = null;
         byte[] fileBytes = new byte[(int) new File(fileDestPath).length()];
@@ -55,9 +52,9 @@ public class FileClientService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //客户端提示
+        //发送方客户端提示
         System.out.println("\n" + msg.getSendTime() + "  " + msg.getSender() + "对" + msg.getGetter()
-                + "发送了文件");
+                + "发送了文件:" + msg.getFileSourcePath() + "到对方的" + msg.getFileDestPath() + "处");
 
     }
 }
