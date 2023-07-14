@@ -28,7 +28,7 @@ public class FileClientService {
         msg.setSendTime(UtilityTool.getLocalTime());
         //将本地文件写入到内存中，并作为msg对象的属性
         FileInputStream fis = null;
-        byte[] fileBytes = new byte[(int) new File(fileDestPath).length()];
+        byte[] fileBytes = new byte[(int) new File(fileSourcePath).length()];
         try {
             fis = new FileInputStream(fileSourcePath);
             fis.read(fileBytes);
