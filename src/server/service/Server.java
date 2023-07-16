@@ -30,6 +30,9 @@ public class Server {
         //端口可以写在配置文件中
         System.out.println("服务器在9999端口监听。。。");
         try {
+            //启动服务端推送新闻的线程
+            new Thread(new SendNewsToAllService()).start();
+            //服务端开始监听客户端的连接
             ss = new ServerSocket(9999);
             while (true) {//当和某个客户端建立连接后，会继续监听等待下一个客户端的链接
                 Socket socket = ss.accept();
@@ -48,9 +51,9 @@ public class Server {
                     oos.writeObject(msg);
                     //启动一个含有服务器socket的线程，用于与客户端socket进行通信
                     ServerConnectClientThread scct = new ServerConnectClientThread(socket, user.getUserId());
-                    scct.start();
                     //为了实现多客户端与服务器进行通信，我们将含有服务器socket的线程放入到集合管理
                     ManageServerConnectClientThread.addServerConnectClientThread(user.getUserId(), scct);
+                    scct.start();
                 } else {//如果该用户不存在，则服务器不与客户端建立连接，并释放相关的资源
                     //给客户端发送登录失败的信息
                     msg.setMsgType(MessageType.MESSAGE_LOGIN_FAILED);

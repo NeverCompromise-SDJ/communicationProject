@@ -55,14 +55,14 @@ public class ClientView {
                                     mcs.sendMessageToAllUser(userId, contentToAll);
                                     break;
                                 case "3":
-                                    System.out.print("请输入消息接收方(在线)：");
+                                    System.out.print("请输入消息接收方：");
                                     String msgGetter = scanner.next();
-                                    System.out.println("请输入发送内容：");
+                                    System.out.print("请输入发送内容：");
                                     String contentToOne = scanner.next();
                                     mcs.sendMessageToOneUser(userId, msgGetter, contentToOne);
                                     break;
                                 case "4":
-                                    System.out.print("请输入消息接收方(在线)：");
+                                    System.out.print("请输入消息接收方：");
                                     String fileGetter = scanner.next();
                                     System.out.print("请输入源文件所在路径：");
                                     String fileSourcePath = scanner.next();
